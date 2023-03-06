@@ -35,6 +35,11 @@
     <!-- ========== GOOGLE FONTS ========== -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900%7cRaleway:400,500,600,700" rel="stylesheet">
 
+        	
+<link rel="stylesheet" type="text/css" href="daterangepicker-master/daterangepicker.css" />
+<link rel="stylesheet" href="js/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
+
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -124,7 +129,15 @@
                         </label>
                         <form autocomplete="off">
                             <div id="apiom_ciudad_desde" class="autocomplete">
-                              <input class="form-control" id="myInput" type="text" name="myCountry" placeholder="Ciudad">
+                           <select class="form-control">
+                            <option value="">Ciudad</option>
+                               <option value="">Guayaquil</option>
+                                <option value="">Cuenca</option>
+                                <option value="">Quito</option>
+                               
+
+                           </select>
+
                             </div>
                             
                           </form>
@@ -151,13 +164,13 @@
 
                         <div class="col-md-6 col-xs-6 arrival_date md_pl5 md_nopadding_right">
                             <div class="form-group">
-                                 <label class="trn">Fecha desde
-                                   
-                                </label>
+                                <label for="datepicker1" class="trn">Fecha de Retiro</label>
 
                                 <div class="form_date">
-                                    <input id="apiom_fecha_desde" type="date" class=" form-control md_noborder_right" >
-                                    <input type="hidden" id="apiom_fecha_desde">
+                                   <!--  <input id="apiom_fecha_desde" type="date" class=" form-control md_noborder_right" >
+                                    <input type="hidden" id="apiom_fecha_desde"> -->
+                                    <input  id="apiom_fecha_desde" type="text" name="datefilter"    class="form-control md_noborder_right trn" placeholder="Fecha de Retiro">
+                                   
                                 </div>
                                 
                             </div>
@@ -184,12 +197,11 @@
                     <div class="row">
                 <div class="col-md-6 col-xs-6 departure_date md_pl5 md_nopadding_right">
                     <div class="form-group">
-                         <label class="trn">Fecha hasta
-                         
-                        </label>
+                        <label for="datepicker1" class="trn">Fecha Devolución</label>
                         <div class="form_date departure">
-                            <input  id="apiom_fecha_hasta" type="date" class=" form-control"  >
-                            <input type="hidden" id="apiom_fecha_hasta">
+                           
+                           <input id="apiom_fecha_hasta" type="text" name="datefilter"    class="form-control trn" placeholder="Fecha Devolución">
+                           
                         </div>
                     </div>
                 </div>
@@ -594,7 +606,57 @@
     <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
     <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
     
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    <script src="js/jquery-timepicker-1.3.5/jquery.timepicker.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+        
+          $('input[name="datefilter"]').daterangepicker({
+              autoUpdateInput: false,
+              locale: {
+                  cancelLabel: 'Clear'
+              }
+          });
+        
+          $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+              $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+          });
+        
+          $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+              $(this).val('');
+          });
+        
+        });
+        </script>
+    
+    <script>
+        var inputEle = document.getElementById('.timeInput');
+    
+    
+    function onTimeChange() {
+      var timeSplit = inputEle.value.split(':'),
+        hours,
+        minutes,
+        meridian;
+      hours = timeSplit[0];
+      minutes = timeSplit[1];
+      if (hours > 12) {
+        meridian = 'PM';
+        hours -= 12;
+      } else if (hours < 12) {
+        meridian = 'AM';
+        if (hours == 0) {
+          hours = 12;
+        }
+      } else {
+        meridian = 'PM';
+      }
+      alert(hours + ':' + minutes + ' ' + meridian);
+    }
+        </script>
+    
  
       
       
@@ -809,6 +871,7 @@
         /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
         autocomplete(document.getElementById("myInput2"), countries);
         </script>
+
 
 
 
